@@ -76,25 +76,25 @@ public:
         int metatable = lua_gettop(l);
 
         lua_pushvalue(l, methods);
-	set(l, LUA_GLOBALSINDEX, T::s_lunaClassName);
+        set(l, LUA_GLOBALSINDEX, T::s_lunaClassName);
 
         lua_pushvalue(l, methods);
-	set(l, metatable, "__metatable");
+        set(l, metatable, "__metatable");
 
         lua_pushvalue(l, methods);
-	set(l, metatable, "__index");
+        set(l, metatable, "__index");
 
         lua_pushcfunction(l, tostringT);
-	set(l, metatable, "__tostring");
+        set(l, metatable, "__tostring");
 
         lua_pushcfunction(l, gcT);
-	set(l, metatable, "__gc");
+        set(l, metatable, "__gc");
 
         lua_newtable(l);
         lua_pushcfunction(l, newT);
-	lua_pushvalue(l, -1);
-	set(l, methods, "new");
-	set(l, -3, "__call");
+        lua_pushvalue(l, -1);
+        set(l, methods, "new");
+        set(l, -3, "__call");
         lua_setmetatable(l, methods);
 
         for (MethodMap* m = T::s_lunaMethods; m->name; ++m) {
@@ -180,13 +180,13 @@ private:
 
             assert(T::s_lunaTypeInfoPtr);
             lua_pushstring(l, T::s_lunaTypeInfoPtr->name());
-	    set(l, type, "name");
+            set(l, type, "name");
 
             lua_pushvalue(l, type);
-	    set(l, methods, "type");
+            set(l, methods, "type");
 
             lua_pushvalue(l, methods);
-	    set(l, LUA_GLOBALSINDEX, T::s_lunaTypeInfoPtr->name());
+            set(l, LUA_GLOBALSINDEX, T::s_lunaTypeInfoPtr->name());
         }
     };
 
@@ -276,9 +276,9 @@ private:
      * \param key Key in table
      */
     static void set(lua_State* l, Index table, const char* key) {
-	lua_pushstring(l, key);
-	lua_insert(l, -2);
-	lua_settable(l, table);
+        lua_pushstring(l, key);
+        lua_insert(l, -2);
+        lua_settable(l, table);
     }
 
     /**
