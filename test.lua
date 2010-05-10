@@ -1,0 +1,5 @@
+print("begin")
+test = Test(1)
+print("Test=" .. test:getValue())
+print("Instance=" .. test:getInstance():getValue())
+print("end")
