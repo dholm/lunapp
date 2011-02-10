@@ -1,5 +1,9 @@
 /**
- * Modified Luna from http://kuchen.googlecode.com/svn/trunk/Pong/Luna.h
+ * Licensed under the MIT license:
+ *  http://www.opensource.org/licenses/mit-license.php
+ *
+ * Originally based on Luna from:
+ *  http://kuchen.googlecode.com/svn/trunk/Pong/Luna.h
  *
  * Sample binding to the Foo class with the Foo::call method.
  *
@@ -248,6 +252,14 @@ private:
      * \returns Zero since no items will be pushed onto the stack
      */
     static int gcT(lua_State* l) {
+        if (luaL_getmetafield(l, 1, "unmanaged")) {
+            lua_pushvalue(l, 1);
+            lua_gettable(l, -2);
+            if (!lua_isnil(l, -1)) {
+                return 0;
+            }
+        }
+
         Userdata* ud = reinterpret_cast<Userdata*>(lua_touserdata(l, 1));
         T* obj = ud->pT;
         delete obj;
